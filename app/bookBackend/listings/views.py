@@ -35,7 +35,7 @@ def login(request):
             user.last_name = d['last_name']
             user.email = d['email']
             user.username = d['id']
-            user.set_password(d['id'] + d['email'] + 'Ravi')
+            user.set_password(d['id'] + d['email'] + 'Sarthak')
             user.save()
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
