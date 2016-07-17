@@ -1,5 +1,4 @@
 <head>
-
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width , initial-scale=1.0">
@@ -10,7 +9,6 @@
 <body>
 
 <script>
-
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
@@ -130,18 +128,14 @@ function eraseCookie(name) {
       .then(function(json){
           alert( JSON.stringify( json ));
           document.createCookie('Token',json.token,1000);
-
        })
-
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-    });
-
-    <nav class="navbar">
+      });
+      <nav class="navbar">
       <div class="container">
         <a class="navbar-brand" href="#">Sarthak A</a>
       </div>
     </nav>
+
 
   }
 </script>
@@ -153,7 +147,6 @@ function eraseCookie(name) {
 </div>
 <div id="status">
 </div>
-
 
 </body>
 </html>
