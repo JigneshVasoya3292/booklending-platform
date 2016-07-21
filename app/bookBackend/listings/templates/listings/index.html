@@ -134,9 +134,15 @@ function eraseCookie(name) {
 </script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
-<script src="static/js/custom.js"></script>
+<!--<script src="static/js/custom.js"></script> -->
+<script>
+ $(document).on('click', '.filters', function() {
+    var filterLabel = document.getElementById('filter-value');
+     filterLabel.textContent = this.text;
+  });
 
-<nav class="navbar navbar-default">
+</script>
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -148,8 +154,9 @@ function eraseCookie(name) {
             <li><a href="#" class="filters">Author</a></li>
             <li><a href="#" class="filters">Owner</a></li>
             <li><a href="#" class="filters">Title</a></li>
-            </ul>
+          </ul>
         </li>
+        <label id="filter-value" class="navbar-text">Title</label>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
