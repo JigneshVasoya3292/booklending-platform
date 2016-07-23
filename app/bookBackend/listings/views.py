@@ -19,6 +19,8 @@ import django_filters
 
 
 def index(request):
+    # pull from db
+    # @a = {1 => {name: "book1", author: "author1"}}
     return render(request, 'listings/index.html')
 
 

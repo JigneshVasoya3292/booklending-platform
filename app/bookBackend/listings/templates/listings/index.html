@@ -9,6 +9,55 @@
 
 <body>
 
+<!--<script src="static/js/custom.js"></script> -->
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <a href="http://localhost:8000" class="glyphicon glyphicon-home btn btn-lg navbar-left" role="button"> </a>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role=" button" aria-haspopup="true" aria-expanded="false">Filter by <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" class="filters">Author</a></li>
+            <li><a href="#" class="filters">Owner</a></li>
+            <li><a href="#" class="filters">Title</a></li>
+          </ul>
+        </li>
+        <label id="filter-value" class="navbar-text">Title</label>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input id ="search-bar" type="text" class="form-control search-text" placeholder="Search">
+        </div>
+        <button id="submit-button" type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <div class="nav navbar-nav navbar-right fb-button">
+        <div id="fb" style="display:none">
+          <fb:login-button  size="large" scope="public_profile,email" onlogin="checkLoginState();">
+          </fb:login-button>
+        </div>
+        <div id="status">
+        </div>
+      </div>
+      </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="table-responsive"
+  <table id="table" class="table">
+      <thread>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Availability</th>
+          <th>Owner</th>
+        </tr>
+      </thread>
+  </table>
+</div>
+</body>
+
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -132,48 +181,45 @@ function eraseCookie(name) {
   }
 
 </script>
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="static/js/bootstrap.min.js"></script>
-<!--<script src="static/js/custom.js"></script> -->
+
 <script>
  $(document).on('click', '.filters', function() {
     var filterLabel = document.getElementById('filter-value');
      filterLabel.textContent = this.text;
   });
 
+$(document).on('click','#submit-button',function(){
+  var filterValue = document.getElementById('filter-value').textContent.toLowerCase();
+  var searchTerm = document.getElementById('search-bar').value.toLowerCase();
+  var searchQuery = "/books/?" + filterValue +  "=" + searchTerm;
+  fetch(searchQuery)
+    .then(function(response){
+      if(response.status!==200){
+        console.log("problem with response" + response.status);
+        return;
+      }
+      response.json().then(function(data){
+        if(data){
+          console.log(data);
+          var len = data.results.length;
+          var text = "";
+          if(len>0){
+            for(var i=0;i<len;i++){
+              if(data.results[i].title && data.results[i].author){
+                text += "<tr><td>"+data.results[i].title+"</td><td>"+data.results[i].author+"</td><td>"+data.results[i].availability+"</td></tr>";
+              }
+            }
+            if(text != ""){
+              $("#table").append(text).removeClass(".hidden");
+            }
+          }
+        }
+      });
+    })
+});
+
 </script>
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <a href="http://localhost:8000" class="glyphicon glyphicon-home btn btn-lg navbar-left" role="button"> </a>
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Filter by <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#" class="filters">Author</a></li>
-            <li><a href="#" class="filters">Owner</a></li>
-            <li><a href="#" class="filters">Title</a></li>
-          </ul>
-        </li>
-        <label id="filter-value" class="navbar-text">Title</label>
-      </ul>
-      <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control search-text" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <div class="nav navbar-nav navbar-right fb-button">
-        <div id="fb" style="display:none">
-          <fb:login-button  size="large" scope="public_profile,email" onlogin="checkLoginState();">
-          </fb:login-button>
-        </div>
-        <div id="status">
-        </div>
-      </div>
-      </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-</body>
 </html>
