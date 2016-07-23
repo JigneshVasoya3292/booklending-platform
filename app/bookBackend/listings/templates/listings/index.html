@@ -11,7 +11,7 @@
 
 <!--<script src="static/js/custom.js"></script> -->
 
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -44,16 +44,16 @@
       </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div class="table-responsive"
-  <table id="table" class="table">
-      <thread>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Availability</th>
-          <th>Owner</th>
-        </tr>
-      </thread>
+<div class="row">
+  <table id="table" class="hidden table-responsive table">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Availability</th>
+    </tr>
+    </thead>
   </table>
 </div>
 </body>
@@ -209,11 +209,11 @@ $(document).on('click','#submit-button',function(){
           if(len>0){
             for(var i=0;i<len;i++){
               if(data.results[i].title && data.results[i].author){
-                text += "<tr><td>"+data.results[i].title+"</td><td>"+data.results[i].author+"</td><td>"+data.results[i].availability+"</td></tr>";
+                text +="<tr><td>"+data.results[i].id+"</td><td>"+data.results[i].title+"</td><td>"+data.results[i].author+"</td><td>"+data.results[i].availability+"</td></tr>";
               }
             }
             if(text != ""){
-              $("#table").append(text).removeClass(".hidden");
+              $("#table").append(text).removeClass("hidden");
             }
           }
         }

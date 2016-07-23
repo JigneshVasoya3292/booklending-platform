@@ -10,3 +10,7 @@
 .hidden{
     display: none;
 }
+
+.table{
+    padding-left: 20px;
+}
