@@ -12,6 +12,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import permissions
 from rest_framework import pagination
 from rest_framework import filters
+from permissions import IsOwnerOrReadOnly
 import django_filters
 
 
@@ -66,7 +67,10 @@ class BooksViewSet(viewsets.ModelViewSet):
     queryset = Books.objects.all()
     pagination_class = StandardResultsSetPagination
     serializer_class = BooksSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly,
+    )
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = BooksFilter
     # check pernission if user is owner then only allow user for

@@ -1,8 +1,13 @@
 .fb-button{
     margin-top:5px;
-    margin-bottom:5px
+    margin-bottom:5px;
+    padding-top: 5px;
 }
 
+.lend-button{
+    margin-right:10px;
+    margin-bottom:10px;
+}
 .search-text{
     width:300px;
 }

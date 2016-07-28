@@ -7,8 +7,9 @@ $(document).on('click','#submit-button',function(){
   // remove the already existing table
   $("#table tr td").remove();
   var filterValue = document.getElementById('filter-value').textContent.toLowerCase();
-  var searchTerm = document.getElementById('search-bar').value.toLowerCase();
+  var searchTerm = document.getElementById('search-bar').value;
   var searchQuery = "/books/?" + filterValue +  "=" + searchTerm;
+  console.log('searchQuery',searchQuery);
   fetch(searchQuery)
     .then(function(response){
       if(response.status!==200){
