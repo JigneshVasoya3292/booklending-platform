@@ -10,7 +10,11 @@ $(document).on('click','#submit-button',function(){
   var searchTerm = document.getElementById('search-bar').value;
   var searchQuery = "/books/?" + filterValue +  "=" + searchTerm;
   console.log('searchQuery',searchQuery);
-  fetch(searchQuery)
+  getNextPrev(searchQuery);
+  });
+
+function getNextPrev(link){
+  fetch(link)
     .then(function(response){
       if(response.status!==200){
         console.log("problem with response" + response.status);
@@ -18,6 +22,8 @@ $(document).on('click','#submit-button',function(){
       }
       response.json().then(function(data){
         if(data){
+          // remove the already existing table
+          $("#table tr td").remove();
           console.log(data);
           var len = data.results.length;
           var text = "";
@@ -32,6 +38,30 @@ $(document).on('click','#submit-button',function(){
             }
           }
         }
+        if(data.next != null){
+          var nextButton = document.getElementById("next");
+          nextButton.className = "";
+          nextButton.value = data.next;
+        }
+        else{
+          document.getElementById("next").className="hidden";
+          }
+        if(data.previous != null){
+          var prevButton = document.getElementById("previous");
+          prevButton.className="";
+          prevButton.value = data.previous;
+        }
+        else{
+          document.getElementById("previous").className="hidden";
+          }
       });
     })
-});
+}
+
+$(document).on('click', '#next', function() {
+    getNextPrev(document.getElementById('next').value);
+  });
+
+$(document).on('click', '#previous', function() {
+    getNextPrev(document.getElementById('previous').value);
+  });
